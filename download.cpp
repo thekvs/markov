@@ -12,22 +12,6 @@ namespace markov {
 
 const std::string kContentFetcher = "curl -s -S";
 
-class BufferDeleter {
-public:
-
-    void operator() (char *p) {
-        free(p);
-    }
-};
-
-class StreamDeleter {
-public:
-
-    void operator() (FILE *s) {
-        pclose(s);
-    }
-};
-
 std::string
 download(std::string url)
 {
