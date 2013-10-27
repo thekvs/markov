@@ -26,14 +26,16 @@ download(std::string url)
     ssize_t bytes_read;
 
     while ((bytes_read = getline(&buffer, &buffer_size, stream)) > 0) {
+        // Yeah, I know there is a potential resource leak, but the best thing
+        // we can do in such situation is to die quickly (and dirty).
         THROW_EXC_IF_FAILED(bytes_read != -1, "failed to read from the child process");
         content.append(buffer, bytes_read);
     }
 
+    free(buffer);
+
     int status = pclose(stream);
     THROW_EXC_IF_FAILED(status != -1, "pclose() failed: %s", strerror(errno));
-
-    free(buffer);
 
     return content;
 }
