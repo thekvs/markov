@@ -1,0 +1,43 @@
+project(markov)
+
+cmake_minimum_required(VERSION 2.8 FATAL_ERROR)
+
+include(FindThreads)
+include(CheckTypeSize)
+include(CheckIncludeFile)
+include(CheckCXXCompilerFlag)
+include(ExternalProject)
+
+CHECK_CXX_COMPILER_FLAG("-std=c++11" CXX11)
+if (NOT CXX11)
+    message(FATAL_ERROR "C++ compiler doesn't support C++11")
+endif()
+
+include_directories(${markov_SOURCE_DIR})
+
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -W")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -W")
+
+find_package(Boost COMPONENTS serialization system locale)
+include_directories(${Boost_INCLUDE_DIRS})
+
+set(SRCS    ${markov_SOURCE_DIR}/numerator.cpp
+            ${markov_SOURCE_DIR}/model.cpp
+)
+
+add_library(markov-static STATIC ${SRCS})
+set_target_properties(markov-static PROPERTIES OUTPUT_NAME markov)
+set_target_properties(markov-static PROPERTIES LINKER_LANGUAGE CXX)
+set_target_properties(markov-static PROPERTIES COMPILE_FLAGS "-std=c++11")
+
+SET(LINKLIBS
+    markov-static
+    ${Boost_LIBRARIES}
+)
+
+add_executable(build-markov normalize.cpp)
+set_target_properties(build-markov PROPERTIES COMPILE_FLAGS "-std=c++11")
+target_link_libraries(build-markov markov-static ${LINKLIBS})
+
+enable_testing()
+add_subdirectory(tests)
