@@ -2,7 +2,7 @@
 
 namespace markov {
 
-static const double one = 1.0;
+static const double   one = 1.0;
 
 void
 ModelBuilder::add_word(const std::string &word)
@@ -82,6 +82,28 @@ ModelBuilder::generate(const std::vector<std::string> &start_sequence, size_t co
         "number of words in the start sequence (=%zu)"
         " have to be equal to the model's dimention (=%zu)",
         start_sequence.size(), dimention);
+
+    Sequence seq(dimention);
+
+    for (const auto &w: start_sequence) {
+        seq.add(numerator.enumerate(w));
+        //result.push_back(w);
+    }
+
+    boost::mt19937 generator;
+    generator.seed(static_cast<unsigned int>(std::time(0)));
+
+    size_t idx = 0;
+    TransitionTable::iterator found = transition_table.find(seq);
+
+    while (found != transition_table.end() && idx < count) {
+        boost::random::discrete_distribution<> dist(found->second.probabilities);
+        auto next_word_id = found->second.words_id[dist(generator)];
+        result.push_back(numerator.denumerate(next_word_id));
+        seq.add(next_word_id);
+        idx++;
+        found = transition_table.find(seq);
+    }
 
     return result;
 }

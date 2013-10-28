@@ -4,6 +4,9 @@
 #include <cmath>
 #include <limits>
 
+#include <boost/random/mersenne_twister.hpp>
+#include <boost/random/discrete_distribution.hpp>
+
 #include "sequence.hpp"
 #include "numerator.hpp"
 
