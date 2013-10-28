@@ -23,6 +23,7 @@ public:
     void add_word(const std::string &word);
     void build();
     void print();
+    std::vector<std::string> generate(const std::vector<std::string> &start_sequence, size_t count);
 
 private:
 

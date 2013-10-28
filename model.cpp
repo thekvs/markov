@@ -73,6 +73,19 @@ ModelBuilder::print()
     }
 }
 
+std::vector<std::string>
+ModelBuilder::generate(const std::vector<std::string> &start_sequence, size_t count)
+{
+    std::vector<std::string> result;
+
+    THROW_EXC_IF_FAILED(start_sequence.size() == dimention,
+        "number of words in the start sequence (=%zu)"
+        " have to be equal to the model's dimention (=%zu)",
+        start_sequence.size(), dimention);
+
+    return result;
+}
+
 double
 ModelBuilder::kahan_sum(const std::vector<double> &data)
 {
