@@ -87,7 +87,6 @@ main(int argc, char **argv)
     build_model(data, model);
 
     std::vector<std::string> start_sequence = tokenize(seed);
-
     std::vector<std::string> gibberish = model.generate(start_sequence, words_count);
     
     if (gibberish.size()) {

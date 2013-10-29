@@ -7,6 +7,9 @@
 #include <map>
 #include <cstdint>
 
+#include <boost/archive/binary_iarchive.hpp>
+#include <boost/archive/binary_oarchive.hpp>
+
 namespace markov {
 
 class Sequence {
@@ -16,7 +19,7 @@ public:
         data.reserve(length);
     }
 
-    Sequence() = delete;
+    Sequence(): length(0) {};
 
     bool complete() const {
         return (data.size() == length);
@@ -33,14 +36,23 @@ public:
     }
 
     bool operator<(const Sequence &other) const {
-        return data < other.data;
+        return (data < other.data);
     }
 
-    std::vector<uint32_t> data;
-    size_t                length;
-};
+    bool operator==(const Sequence &other) const {
+        return (data == other.data && length == other.length);
+    }
 
-typedef std::map<Sequence, int> SequenceMap;
+    template<typename Archive>
+    void serialize(Archive &ar, const unsigned int)
+    {
+        ar & length;
+        ar & data;
+    }
+
+    size_t                length;
+    std::vector<uint32_t> data;
+};
 
 } // namespace
 

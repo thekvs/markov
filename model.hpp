@@ -30,6 +30,8 @@ public:
 
 private:
 
+    friend class boost::serialization::access;
+
     typedef std::map<uint32_t, size_t> Frequencies;
 
     struct SequenceStat {
@@ -37,31 +39,46 @@ private:
         Frequencies frequencies;
     };
 
-    // typedef std::map<Sequence, Frequencies> TextStat;
     typedef std::map<Sequence, SequenceStat> TextStat;
 
     class Transition {
     public:
 
-        void add(uint32_t id, double probability) {
+        void add(uint32_t id, double probability)
+        {
             words_id.push_back(id);
             probabilities.push_back(probability);
         }
 
         std::vector<uint32_t> words_id;
         std::vector<double>   probabilities;
+
+        template<typename Archive>
+        void serialize(Archive &ar, const unsigned int)
+        {
+            ar & words_id;
+            ar & probabilities;
+        }
     };
 
     typedef std::map<Sequence, Transition> TransitionTable;
 
-    size_t    dimention;
-    Sequence  sequence;
-    Numerator numerator;
-    TextStat  text_stat;
-
+    size_t          dimention;
     TransitionTable transition_table;
+    Numerator       numerator;
+
+    Sequence        sequence;
+    TextStat        text_stat;
 
     double kahan_sum(const std::vector<double> &data);
+
+    template<typename Archive>
+    void serialize(Archive &ar, const unsigned int)
+    {
+        ar & dimention;
+        ar & transition_table;
+        ar & numerator;
+    }
 };
 
 } // namespace

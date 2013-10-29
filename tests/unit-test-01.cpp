@@ -29,9 +29,6 @@ test()
 
     THROW_EXC_IF_FAILED(seq.complete() == true, "unit test failed");
     THROW_EXC_IF_FAILED(seq.data == expected2, "unit test failed");
-
-    SequenceMap map;
-    map[seq] = 1;
 }
 
 int

@@ -5,11 +5,10 @@
 #include <string>
 #include <vector>
 
-#include <boost/archive/binary_iarchive.hpp>
-#include <boost/archive/binary_oarchive.hpp>
 #include <boost/utility.hpp>
 #include <boost/bimap.hpp>
 
+#include "serialize.hpp"
 #include "exc.hpp"
 
 namespace markov {
