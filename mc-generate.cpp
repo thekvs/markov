@@ -11,6 +11,7 @@ using namespace markov;
 static struct option longopts[] = {
     { "model",      required_argument,  NULL,   'm' },
     { "seed",       required_argument,  NULL,   's' },
+    { "seed-file",  required_argument,  NULL,   'S' },
     { "count",      required_argument,  NULL,   'c' },
     { "help",       no_argument,        NULL,   'h' },
     { NULL,         0,                  NULL,   0   }
@@ -19,6 +20,7 @@ static struct option longopts[] = {
 struct Args {
     std::string model;
     std::string seed;
+    std::string seed_file;
     size_t      count;
 
     Args(): count(0) {}
@@ -33,6 +35,7 @@ help(const char *program)
     std::cout << "  -h,--help           write this help message and exit" << std::endl;
     std::cout << "  -m,--model arg      file where to store compiled model" << std::endl;
     std::cout << "  -s,--seed arg       start sequence" << std::endl;
+    std::cout << "  -S,--seed-file arg  read start sequence(s) (one per line) from a given file" << std::endl;
     std::cout << "  -c,--count arg      number of words to generate (without start sequence)" << std::endl;
     std::cout << std::endl;
 
@@ -49,13 +52,16 @@ parse_args(int argc, char **argv)
     int  opt, optidx;
     Args args;
 
-    while ((opt = getopt_long(argc, argv, "m:s:c:h", longopts, &optidx)) != -1) {
+    while ((opt = getopt_long(argc, argv, "m:s:S:c:h", longopts, &optidx)) != -1) {
         switch (opt) {
             case 'm':
                 args.model = optarg;
                 break;
             case 's':
                 args.seed = optarg;
+                break;
+            case 'S':
+                args.seed_file = optarg;
                 break;
             case 'c':
                 args.count = boost::lexical_cast<size_t>(optarg);
@@ -70,7 +76,8 @@ parse_args(int argc, char **argv)
     }
 
     THROW_EXC_IF_FAILED(!args.model.empty(), "file with model's data must be specified");
-    THROW_EXC_IF_FAILED(!args.seed.empty(), "start sequence must be specified");
+    THROW_EXC_IF_FAILED((!args.seed.empty()) || (!args.seed_file.empty()),
+        "at least one start sequence source must be specified");
     THROW_EXC_IF_FAILED(args.count > 0, "number of words to generate must be positive integer");
 
     return args;
@@ -99,8 +106,9 @@ run(int argc, char **argv)
         for (const auto &word: gibberish) {
             std::cout << word << " ";
         }
-        std::cout << std::endl;
     }
+
+    std::cout << std::endl;
 }
 
 int
