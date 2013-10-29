@@ -18,7 +18,7 @@ include_directories(${markov_SOURCE_DIR})
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -W")
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -W")
 
-find_package(Boost COMPONENTS serialization system locale)
+find_package(Boost COMPONENTS serialization system locale random)
 if (NOT Boost_FOUND)
     message(FATAL_ERROR "couldn't find all required boost components")
 endif()
