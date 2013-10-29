@@ -11,6 +11,7 @@ namespace markov {
 
 const std::string kTextSeparators = " .,;:!?-*\"\'()[]{}&$\n\r";
 const std::string kUrlSeparators = " ,";
+const std::string kFileSeparators = kUrlSeparators;
 
 typedef boost::char_separator<char> Separator;
 typedef boost::tokenizer<Separator> Tokenizer;
