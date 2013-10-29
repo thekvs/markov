@@ -60,6 +60,22 @@ Model::build(bool sanity_check)
 }
 
 void
+Model::build(const std::string &data, bool sanity_check)
+{
+    Separator separator(kTextSeparators.c_str());
+    Tokenizer tokenizer(data, separator);
+
+    boost::locale::generator gen;
+    std::locale locale = gen("ru_RU.UTF-8");
+
+    for (const auto &token: tokenizer) {
+        add_word(boost::locale::to_lower(token, locale));
+    }
+
+    build(sanity_check);
+}
+
+void
 Model::print()
 {
     for (const auto &elem: transition_table) {

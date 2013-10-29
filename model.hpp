@@ -9,6 +9,7 @@
 
 #include "sequence.hpp"
 #include "numerator.hpp"
+#include "tokenizer.hpp"
 
 namespace markov {
 
@@ -25,6 +26,7 @@ public:
 
     void add_word(const std::string &word);
     void build(bool sanity_check=false);
+    void build(const std::string &data, bool sanity_check=false);
     void print();
     std::vector<std::string> generate(const std::vector<std::string> &start_sequence, size_t count);
 

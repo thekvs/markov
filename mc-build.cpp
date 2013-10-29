@@ -114,22 +114,6 @@ download(std::string url)
 }
 
 void
-build_model(const std::string &data, Model &model)
-{
-    Separator separator(kTextSeparators.c_str());
-    Tokenizer tokenizer(data, separator);
-
-    boost::locale::generator gen;
-    std::locale locale = gen("ru_RU.UTF-8");
-
-    for (const auto &token: tokenizer) {
-        model.add_word(boost::locale::to_lower(token, locale));
-    }
-
-    model.build();
-}
-
-void
 run(int argc, char **argv)
 {
     Args args = parse_args(argc, argv);
@@ -151,7 +135,7 @@ run(int argc, char **argv)
             std::ifstream stream(file.c_str(), std::ios::in);
             THROW_EXC_IF_FAILED(!stream.fail(), "couldn't open file %s", file.c_str());
 
-            std::string   line, data;
+            std::string line, data;
 
             while (std::getline(stream, line)) {
                 data.append(line);
@@ -164,7 +148,8 @@ run(int argc, char **argv)
     }
 
     Model model(args.dimension);
-    build_model(train_data, model);
+    model.build(train_data);
+
     save(model, args.model);
 }
 
