@@ -146,7 +146,7 @@ run(int argc, char **argv)
     }
 
     if (!args.files.empty()) {
-        std::vector<std::string> files = tokenize(args.urls, kUrlSeparators, false);
+        std::vector<std::string> files = tokenize(args.files, kUrlSeparators, false);
         for (const auto &file: files) {
             std::ifstream stream(file.c_str(), std::ios::in);
             std::string   line, data;
