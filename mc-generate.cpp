@@ -84,20 +84,14 @@ parse_args(int argc, char **argv)
 }
 
 void
-run(int argc, char **argv)
+generate(Model &model, const std::string &seed, size_t count)
 {
-    Args args = parse_args(argc, argv);
-
-    Model model;
-
-    load(model, args.model);
-
-    std::vector<std::string> start_sequence = tokenize(args.seed, kTextSeparators);
+    std::vector<std::string> start_sequence = tokenize(seed, kTextSeparators);
     THROW_EXC_IF_FAILED(start_sequence.size() == model.order(),
         "number of words in the seed sequence (=%zu) must coinside with model's dimention (=%zu)",
         start_sequence.size(), model.order());
 
-    std::vector<std::string> gibberish = model.generate(start_sequence, args.count);
+    std::vector<std::string> gibberish = model.generate(start_sequence, count);
     
     if (gibberish.size()) {
         for (const auto &word: start_sequence) {
@@ -108,7 +102,32 @@ run(int argc, char **argv)
         }
     }
 
-    std::cout << std::endl;
+    std::cout << std::endl;    
+}
+
+void
+run(int argc, char **argv)
+{
+    Args args = parse_args(argc, argv);
+
+    Model model;
+
+    load(model, args.model);
+
+    if (!args.seed.empty()) {
+        generate(model, args.seed, args.count);
+    }
+
+    if (!args.seed_file.empty()) {
+        std::ifstream stream(args.seed_file.c_str(), std::ios::in);
+        THROW_EXC_IF_FAILED(!stream.fail(), "couldn't open file %s", args.seed_file.c_str());
+
+        std::string line;
+
+        while (std::getline(stream, line)) {
+            generate(model, line, args.count);
+        }
+    }
 }
 
 int
