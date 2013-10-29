@@ -33,7 +33,7 @@ Model::add_word(const std::string &word)
 }
 
 void
-Model::build()
+Model::build(bool sanity_check)
 {
     for (const auto &ts_elem: text_stat) {
         const TextStat::mapped_type &sequence_stat = ts_elem.second;
@@ -43,15 +43,17 @@ Model::build()
             transition.add(f.first, probability);
         }
 
-        // Sanity check: sum of probabilities have to be 1.
-        //
-        // Since we are summing doubles we have to use a special
-        // summation algorithm to compensate for accumulating error
-        // and than compare difference with epsilon for double type.
-        double sum = kahan_sum(transition.probabilities);
-        double diff = std::fabs(sum - one);
-        THROW_EXC_IF_FAILED(diff < std::numeric_limits<double>::epsilon(),
-            "broken invariant: sum of probs. (=%f) is not eq. to 1", sum);
+        if (sanity_check) {
+            // Sanity check: sum of probabilities have to be 1.
+            //
+            // Since we are summing doubles we have to use a special
+            // summation algorithm to compensate for accumulating error
+            // and than compare difference with epsilon for double type.
+            double sum = kahan_sum(transition.probabilities);
+            double diff = std::fabs(sum - one);
+            THROW_EXC_IF_FAILED(diff < std::numeric_limits<double>::epsilon(),
+                "broken invariant: sum of probs. (=%f) is not eq. to 1", sum);
+        }
 
         transition_table[ts_elem.first] = transition;
     }

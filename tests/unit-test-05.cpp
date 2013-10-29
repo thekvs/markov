@@ -30,7 +30,8 @@ test()
         model1.add_word(w);
     }
 
-    model1.build();
+    bool with_sanity_check = true;
+    model1.build(with_sanity_check);
 
     std::string data_file = mk_temp_filename();
 

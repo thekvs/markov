@@ -24,7 +24,7 @@ public:
     Model(): Model(0) {}
 
     void add_word(const std::string &word);
-    void build();
+    void build(bool sanity_check=false);
     void print();
     std::vector<std::string> generate(const std::vector<std::string> &start_sequence, size_t count);
 
