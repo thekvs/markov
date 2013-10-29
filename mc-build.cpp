@@ -149,6 +149,8 @@ run(int argc, char **argv)
         std::vector<std::string> files = tokenize(args.files, kFileSeparators, false);
         for (const auto &file: files) {
             std::ifstream stream(file.c_str(), std::ios::in);
+            THROW_EXC_IF_FAILED(!stream.fail(), "couldn't open file %s", file.c_str());
+
             std::string   line, data;
 
             while (std::getline(stream, line)) {
