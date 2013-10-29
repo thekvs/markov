@@ -19,6 +19,10 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -W")
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -W")
 
 find_package(Boost COMPONENTS serialization system locale)
+if (NOT Boost_FOUND)
+    message(FATAL_ERROR "couldn't find all required boost components")
+endif()
+
 include_directories(${Boost_INCLUDE_DIRS})
 
 set(SRCS    ${markov_SOURCE_DIR}/numerator.cpp
