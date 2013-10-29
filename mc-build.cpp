@@ -34,11 +34,11 @@ help(const char *program)
     std::cout << "Usage: " << program << " options" << std::endl;
     std::cout << std::endl;
     std::cout << "Options:" << std::endl;
-    std::cout << "  -h,--help       write this help message and exit" << std::endl;
-    std::cout << "  -u,--urls       comma separated list of urls to fetch data for a model" << std::endl;
-    std::cout << "  -f,--files      comma separated list of files with data for a model" << std::endl;
-    std::cout << "  -d,--dimension  model's dimension" << std::endl;
-    std::cout << "  -m,--model      file where to store compiled model" << std::endl;
+    std::cout << "  -h,--help           write this help message and exit" << std::endl;
+    std::cout << "  -u,--urls args      comma separated list of urls to fetch data for a model" << std::endl;
+    std::cout << "  -f,--files args     comma separated list of files with data for a model" << std::endl;
+    std::cout << "  -d,--dimension arg  model's dimension" << std::endl;
+    std::cout << "  -m,--model arg      file where to store compiled model" << std::endl;
     std::cout << std::endl;
 
     exit(EXIT_SUCCESS);

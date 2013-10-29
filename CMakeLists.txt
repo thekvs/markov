@@ -36,13 +36,14 @@ SET(LINKLIBS
     ${Boost_LIBRARIES}
 )
 
-add_executable(build-markov normalize.cpp)
-set_target_properties(build-markov PROPERTIES COMPILE_FLAGS "-std=c++11")
-target_link_libraries(build-markov markov-static ${LINKLIBS})
-
 add_executable(mc-build mc-build.cpp)
 set_target_properties(mc-build PROPERTIES COMPILE_FLAGS "-std=c++11")
 target_link_libraries(mc-build markov-static ${LINKLIBS})
+
+add_executable(mc-print mc-print.cpp)
+set_target_properties(mc-print PROPERTIES COMPILE_FLAGS "-std=c++11")
+target_link_libraries(mc-print markov-static ${LINKLIBS})
+
 
 enable_testing()
 add_subdirectory(tests)

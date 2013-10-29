@@ -21,7 +21,7 @@ public:
     {
     }
 
-    Model() = delete;
+    Model(): Model(0) {}
 
     void add_word(const std::string &word);
     void build();

@@ -19,7 +19,7 @@ public:
         data.reserve(length);
     }
 
-    Sequence(): length(0) {};
+    Sequence(): Sequence(0) {};
 
     bool complete() const {
         return (data.size() == length);
