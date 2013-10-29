@@ -23,6 +23,7 @@ include_directories(${Boost_INCLUDE_DIRS})
 
 set(SRCS    ${markov_SOURCE_DIR}/numerator.cpp
             ${markov_SOURCE_DIR}/model.cpp
+            ${markov_SOURCE_DIR}/tokenizer.cpp
 )
 
 add_library(markov-static STATIC ${SRCS})
@@ -38,6 +39,10 @@ SET(LINKLIBS
 add_executable(build-markov normalize.cpp)
 set_target_properties(build-markov PROPERTIES COMPILE_FLAGS "-std=c++11")
 target_link_libraries(build-markov markov-static ${LINKLIBS})
+
+add_executable(mc-build mc-build.cpp)
+set_target_properties(mc-build PROPERTIES COMPILE_FLAGS "-std=c++11")
+target_link_libraries(mc-build markov-static ${LINKLIBS})
 
 enable_testing()
 add_subdirectory(tests)

@@ -8,42 +8,20 @@
 
 #include "exc.hpp"
 #include "model.hpp"
+#include "tokenizer.hpp"
 
 namespace markov {
-
-static const char *separators = " .,;:!?-*\"\'()\n\r";
-
-typedef boost::char_separator<char> Separator;
-typedef boost::tokenizer<Separator> Tokenizer;
-
-std::vector<std::string>
-tokenize(const std::string &data)
-{
-    Separator separator(separators);
-    Tokenizer tokenizer(data, separator);
-
-    boost::locale::generator gen;
-    std::locale locale = gen("ru_RU.UTF-8");
-
-    std::vector<std::string> tokens;
-
-    for (auto &token: tokenizer) {
-        tokens.push_back(boost::locale::to_lower(token, locale));
-    }
-
-    return tokens;
-}
 
 void
 build_model(const std::string &data, Model &model)
 {
-    Separator separator(separators);
+    Separator separator(kTextSeparators.c_str());
     Tokenizer tokenizer(data, separator);
 
     boost::locale::generator gen;
     std::locale locale = gen("ru_RU.UTF-8");
 
-    for (auto &token: tokenizer) {
+    for (const auto &token: tokenizer) {
         model.add_word(boost::locale::to_lower(token, locale));
     }
 
@@ -86,7 +64,7 @@ main(int argc, char **argv)
 
     build_model(data, model);
 
-    std::vector<std::string> start_sequence = tokenize(seed);
+    std::vector<std::string> start_sequence = tokenize(seed, kTextSeparators);
     std::vector<std::string> gibberish = model.generate(start_sequence, words_count);
     
     if (gibberish.size()) {
