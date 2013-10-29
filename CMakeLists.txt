@@ -44,6 +44,9 @@ add_executable(mc-print mc-print.cpp)
 set_target_properties(mc-print PROPERTIES COMPILE_FLAGS "-std=c++11")
 target_link_libraries(mc-print markov-static ${LINKLIBS})
 
+add_executable(mc-generate mc-generate.cpp)
+set_target_properties(mc-generate PROPERTIES COMPILE_FLAGS "-std=c++11")
+target_link_libraries(mc-generate markov-static ${LINKLIBS})
 
 enable_testing()
 add_subdirectory(tests)

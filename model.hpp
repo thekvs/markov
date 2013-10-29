@@ -28,6 +28,10 @@ public:
     void print();
     std::vector<std::string> generate(const std::vector<std::string> &start_sequence, size_t count);
 
+    size_t order() const {
+        return dimention;
+    }
+
 private:
 
     friend class boost::serialization::access;
