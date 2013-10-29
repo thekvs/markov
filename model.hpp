@@ -12,16 +12,16 @@
 
 namespace markov {
 
-class ModelBuilder {
+class Model {
 public:
 
-    ModelBuilder(size_t dim):
+    Model(size_t dim):
         dimention(dim),
         sequence(dimention)
     {
     }
 
-    ModelBuilder() = delete;
+    Model() = delete;
 
     void add_word(const std::string &word);
     void build();

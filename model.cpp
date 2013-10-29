@@ -5,7 +5,7 @@ namespace markov {
 static const double   one = 1.0;
 
 void
-ModelBuilder::add_word(const std::string &word)
+Model::add_word(const std::string &word)
 {
     uint32_t id = numerator.enumerate(word);
 
@@ -33,7 +33,7 @@ ModelBuilder::add_word(const std::string &word)
 }
 
 void
-ModelBuilder::build()
+Model::build()
 {
     for (const auto &ts_elem: text_stat) {
         const TextStat::mapped_type &sequence_stat = ts_elem.second;
@@ -58,7 +58,7 @@ ModelBuilder::build()
 }
 
 void
-ModelBuilder::print()
+Model::print()
 {
     for (const auto &elem: transition_table) {
         for (const auto &id: elem.first.data) {
@@ -74,7 +74,7 @@ ModelBuilder::print()
 }
 
 std::vector<std::string>
-ModelBuilder::generate(const std::vector<std::string> &start_sequence, size_t count)
+Model::generate(const std::vector<std::string> &start_sequence, size_t count)
 {
     std::vector<std::string> result;
 
@@ -109,7 +109,7 @@ ModelBuilder::generate(const std::vector<std::string> &start_sequence, size_t co
 }
 
 double
-ModelBuilder::kahan_sum(const std::vector<double> &data)
+Model::kahan_sum(const std::vector<double> &data)
 {
     // directly stolen from here: http://en.wikipedia.org/wiki/Kahan_summation_algorithm
     double sum = 0.0;

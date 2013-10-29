@@ -22,7 +22,7 @@ mk_temp_filename()
 void
 test()
 {
-    ModelBuilder model1(1), model2(1);
+    Model model1(1), model2(1);
 
     std::vector<std::string> words = {"aaaa", "bbbb", "cccc", "dddd"};
 

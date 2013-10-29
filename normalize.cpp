@@ -35,7 +35,7 @@ tokenize(const std::string &data)
 }
 
 void
-build_model(const std::string &data, ModelBuilder &model)
+build_model(const std::string &data, Model &model)
 {
     Separator separator(separators);
     Tokenizer tokenizer(data, separator);
@@ -82,7 +82,7 @@ main(int argc, char **argv)
     //     std::cout << token << std::endl;
     // }
 
-    ModelBuilder model(model_dimension);
+    Model model(model_dimension);
 
     build_model(data, model);
 
