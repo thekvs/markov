@@ -7,17 +7,17 @@ static const double   one = 1.0;
 void
 Model::add_word(const std::string &word)
 {
-    uint32_t id = numerator.enumerate(word);
+    auto id = numerator.enumerate(word);
 
     if (sequence.complete()) {
-        TextStat::iterator seq_found = text_stat.find(sequence);
+        auto seq_found = text_stat.find(sequence);
         if (seq_found == text_stat.end()) {
             Frequencies freq = { {id, 1} };
             SequenceStat sequence_stat = {1, freq};
             text_stat[sequence] = sequence_stat;
         } else {
             SequenceStat &sequence_stat = seq_found->second;
-            Frequencies::iterator freq_found = sequence_stat.frequencies.find(id);
+            auto freq_found = sequence_stat.frequencies.find(id);
 
             if (freq_found == sequence_stat.frequencies.end()) {
                 sequence_stat.frequencies[id] = 1;
@@ -105,7 +105,6 @@ Model::generate(const std::vector<std::string> &start_sequence, size_t count)
 
     for (const auto &w: start_sequence) {
         seq.add(numerator.enumerate(w));
-        //result.push_back(w);
     }
 
     boost::mt19937 generator;

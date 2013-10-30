@@ -86,12 +86,12 @@ parse_args(int argc, char **argv)
 void
 generate(Model &model, const std::string &seed, size_t count)
 {
-    std::vector<std::string> start_sequence = tokenize(seed, kTextSeparators);
+    auto start_sequence = tokenize(seed, kTextSeparators);
     THROW_EXC_IF_FAILED(start_sequence.size() == model.order(),
         "number of words in the seed sequence (=%zu) must coinside with model's dimention (=%zu)",
         start_sequence.size(), model.order());
 
-    std::vector<std::string> gibberish = model.generate(start_sequence, count);
+    auto gibberish = model.generate(start_sequence, count);
     
     if (gibberish.size()) {
         for (const auto &word: start_sequence) {
@@ -108,7 +108,7 @@ generate(Model &model, const std::string &seed, size_t count)
 void
 run(int argc, char **argv)
 {
-    Args args = parse_args(argc, argv);
+    auto args = parse_args(argc, argv);
 
     Model model;
 

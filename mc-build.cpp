@@ -88,7 +88,6 @@ parse_args(int argc, char **argv)
 std::string
 download(std::string url)
 {
-    std::string content;
     std::string command = kContentFetcher + " " + url;
 
     FILE *stream = popen(command.c_str(), "r");
@@ -97,6 +96,8 @@ download(std::string url)
     char   *buffer = NULL;
     size_t  buffer_size;
     ssize_t bytes_read;
+
+    std::string content;
 
     while ((bytes_read = getline(&buffer, &buffer_size, stream)) > 0) {
         // Yeah, I know there is a potential resource leak, but the best thing
@@ -116,12 +117,12 @@ download(std::string url)
 void
 run(int argc, char **argv)
 {
-    Args args = parse_args(argc, argv);
+    auto args = parse_args(argc, argv);
 
     std::string train_data;
 
     if (!args.urls.empty()) {
-        std::vector<std::string> urls = tokenize(args.urls, kUrlSeparators, false);
+        auto urls = tokenize(args.urls, kUrlSeparators, false);
         for (const auto &url: urls) {
             auto data = download(url);
             train_data.append(data);
@@ -130,7 +131,7 @@ run(int argc, char **argv)
     }
 
     if (!args.files.empty()) {
-        std::vector<std::string> files = tokenize(args.files, kFileSeparators, false);
+        auto files = tokenize(args.files, kFileSeparators, false);
         for (const auto &file: files) {
             std::ifstream stream(file.c_str(), std::ios::in);
             THROW_EXC_IF_FAILED(!stream.fail(), "couldn't open file %s", file.c_str());

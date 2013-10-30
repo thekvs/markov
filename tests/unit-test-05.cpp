@@ -41,8 +41,8 @@ test()
     std::vector<std::string> start = {"aaaa"};
     std::vector<std::string> expected_gibberish = {"bbbb", "cccc", "dddd"};
 
-    std::vector<std::string> gibberish1 = model1.generate(start, 3);
-    std::vector<std::string> gibberish2 = model2.generate(start, 3);
+    auto gibberish1 = model1.generate(start, 3);
+    auto gibberish2 = model2.generate(start, 3);
 
     THROW_EXC_IF_FAILED(gibberish1 == gibberish2, "unit test failed");
     THROW_EXC_IF_FAILED(gibberish1 == expected_gibberish, "unit test failed");

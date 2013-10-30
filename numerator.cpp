@@ -7,7 +7,7 @@ Numerator::enumerate(const std::string &s)
 {
     uint32_t result;
 
-    DataStorage::left_iterator found = data.left.find(s);
+    auto found = data.left.find(s);
 
     if (found == data.left.end()) {
         counter++;
@@ -23,7 +23,7 @@ Numerator::enumerate(const std::string &s)
 std::string
 Numerator::denumerate(uint32_t id)
 {
-    DataStorage::right_iterator found = data.right.find(id);
+    auto found = data.right.find(id);
     THROW_EXC_IF_FAILED(found != data.right.end(), "broken invariant");
 
     return found->second;

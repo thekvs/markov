@@ -63,7 +63,7 @@ parse_args(int argc, char **argv)
 void
 run(int argc, char **argv)
 {
-    Args args = parse_args(argc, argv);
+    auto args = parse_args(argc, argv);
 
     Model model;
 

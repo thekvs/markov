@@ -36,7 +36,7 @@ test()
 
     THROW_EXC_IF_FAILED(id == expected, "unit test failed");
 
-    std::string data_file = mk_temp_filename();
+    auto data_file = mk_temp_filename();
 
     save(numerator1, data_file);
     load(numerator2, data_file);
