@@ -16,7 +16,7 @@ Model::add_word(const std::string &word)
             SequenceStat sequence_stat = {1, freq};
             text_stat[sequence] = sequence_stat;
         } else {
-            SequenceStat &sequence_stat = seq_found->second;
+            auto &sequence_stat = seq_found->second;
             auto freq_found = sequence_stat.frequencies.find(id);
 
             if (freq_found == sequence_stat.frequencies.end()) {
@@ -49,8 +49,8 @@ Model::build(bool sanity_check)
             // Since we are summing doubles we have to use a special
             // summation algorithm to compensate for accumulating error
             // and than compare difference with epsilon for double type.
-            double sum = kahan_sum(transition.probabilities);
-            double diff = std::fabs(sum - one);
+            auto sum = kahan_sum(transition.probabilities);
+            auto diff = std::fabs(sum - one);
             THROW_EXC_IF_FAILED(diff < std::numeric_limits<double>::epsilon(),
                 "broken invariant: sum of probs. (=%f) is not eq. to 1", sum);
         }
