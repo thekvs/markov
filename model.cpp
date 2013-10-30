@@ -2,7 +2,7 @@
 
 namespace markov {
 
-static const double   one = 1.0;
+static const double one = 1.0;
 
 void
 Model::add_word(const std::string &word)
@@ -36,7 +36,7 @@ void
 Model::build(bool sanity_check)
 {
     for (const auto &ts_elem: text_stat) {
-        const TextStat::mapped_type &sequence_stat = ts_elem.second;
+        const auto &sequence_stat = ts_elem.second;
         Transition transition;
         for (const auto &f: sequence_stat.frequencies) {
             double probability = static_cast<double>(f.second) / sequence_stat.total_suffixes_count;
@@ -111,7 +111,7 @@ Model::generate(const std::vector<std::string> &start_sequence, size_t count)
     generator.seed(static_cast<unsigned int>(std::time(0)));
 
     size_t idx = 0;
-    TransitionTable::iterator found = transition_table.find(seq);
+    auto found = transition_table.find(seq);
 
     while (found != transition_table.end() && idx < count) {
         boost::random::discrete_distribution<> dist(found->second.probabilities);
