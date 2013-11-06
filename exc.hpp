@@ -22,7 +22,7 @@ public:
     Exc(const char *file, int line, const char *fmt, ...) CHECK_PRINTF_ARGS(4, 5)
     {
         va_list ap;
-        char    buff[1024];
+        char    buff[512];
 
         va_start(ap, fmt);
         vsnprintf(buff, sizeof(buff), fmt, ap);
@@ -40,7 +40,7 @@ public:
 
 private:
 
-    char msg[1024];
+    char msg[512];
 
     Exc() {}
 
