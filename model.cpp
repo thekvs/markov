@@ -2,7 +2,7 @@
 
 namespace markov {
 
-static const double one = 1.0;
+static const double kOne = 1.0;
 
 void
 Model::add_word(const std::string &word)
@@ -50,7 +50,7 @@ Model::build(bool sanity_check)
             // summation algorithm to compensate for accumulating error
             // and than compare difference with epsilon for double type.
             auto sum = kahan_sum(transition.probabilities);
-            auto diff = std::fabs(sum - one);
+            auto diff = std::fabs(sum - kOne);
             THROW_EXC_IF_FAILED(diff < std::numeric_limits<double>::epsilon(),
                 "broken invariant: sum of probs. (=%f) is not eq. to 1", sum);
         }
