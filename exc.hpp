@@ -10,10 +10,16 @@
 
 namespace markov {
 
+#ifdef __GNUC__
+#   define CHECK_PRINTF_ARGS(f, e) __attribute__ ((format (printf, f, e)))
+#else
+#   define CHECK_PRINTF_ARGS(f, e)
+#endif
+
 class Exc: public std::exception {
 public:
 
-    Exc(const char *file, int line, const char *fmt, ...)
+    Exc(const char *file, int line, const char *fmt, ...) CHECK_PRINTF_ARGS(4, 5)
     {
         va_list ap;
         char    buff[1024];
@@ -26,7 +32,7 @@ public:
     }
 
     virtual ~Exc() throw() {
-    };
+    }
 
     virtual const char *what() const throw() {
         return msg;
