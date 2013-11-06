@@ -31,6 +31,10 @@ public:
         snprintf(msg, sizeof(msg), "%s:%i %s", sanitize_file_name(file), line, buff);
     }
 
+    Exc(const Exc &exc) {
+        strncpy(msg, exc.what(), sizeof(msg));
+    }
+
     virtual ~Exc() throw() {
     }
 
