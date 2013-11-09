@@ -136,11 +136,13 @@ run(int argc, char **argv)
             std::ifstream stream(file.c_str(), std::ios::in);
             THROW_EXC_IF_FAILED(!stream.fail(), "couldn't open file %s", file.c_str());
 
-            std::string line, data;
+            std::string data;
+            char        buffer[1024 * 8];
 
-            while (std::getline(stream, line)) {
-                data.append(line);
-                data.append("\n");
+            while (!stream.eof() && !stream.fail()) {
+                stream.read(buffer, sizeof(buffer));
+                std::streamsize bytes_read = stream.gcount();
+                data.append(buffer, bytes_read);
             }
 
             train_data.append(data);
