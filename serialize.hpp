@@ -29,7 +29,7 @@ void save(const T &s, std::string filename)
 
     bio::filtering_streambuf<bio::output> stream;
 
-    stream.push(bio::gzip_compressor(bio::zlib::best_compression));
+    stream.push(bio::gzip_compressor(bio::zlib::best_speed));
     stream.push(ofs);
 
     boost::archive::binary_oarchive oa(stream);
