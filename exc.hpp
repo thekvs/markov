@@ -12,12 +12,8 @@ namespace markov {
 
 #if defined  __GNUC__ || defined __clang__
 #   define CHECK_PRINTF_ARGS(f, e)  __attribute__ ((format (printf, f, e)))
-#   define LIKELY(x)                __builtin_expect(!!(x), 1)
-#   define UNLIKELY(x)              __builtin_expect(!!(x), 0)
 #else
 #   define CHECK_PRINTF_ARGS(f, e)
-#   define LIKELY(x)
-#   define UNLIKELY(x)
 #endif
 
 class Exc: public std::exception {
@@ -69,7 +65,7 @@ private:
 #define THROW_EXC(args...)  (throw Exc(__FILE__, __LINE__, args))
 
 #define THROW_EXC_IF_FAILED(status, args...) do {       \
-    if (UNLIKELY(!(status))) {                          \
+    if (!(status)) {                                    \
         throw Exc(__FILE__, __LINE__, args);            \
     }                                                   \
 } while(0)
