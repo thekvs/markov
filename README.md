@@ -14,9 +14,10 @@ $ make test
 ### Usage
 
 There are three components provided:
+
 1. Utility to compile and store on the disk Markov chain model.
-2. Utility to generate random texts using compiled model.
-3. Utility to dump compiled model.
+1. Utility to generate random texts using compiled model.
+1. Utility to dump compiled model.
 
 #### Examples
 
