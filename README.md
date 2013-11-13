@@ -1,6 +1,6 @@
-### Simple Markov chain text generator.
+## Simple Markov chain text generator.
 
-#### Build
+### Build
 
 This is a typical CMake project, so the build procedure is quite straitforward.
 ```
@@ -11,14 +11,14 @@ $ make
 $ make test
 ```
 
-#### Usage
+### Usage
 
 There are three components provided:
 1. Utility to compile and store on the disk Markov chain model.
-1. Utility to generate random texts using compiled model.
-1. Utility to dump compiled model.
+2. Utility to generate random texts using compiled model.
+3. Utility to dump compiled model.
 
-##### Examples
+#### Examples
 
 Generate Markov chain order 2 using files, stored in the internet and file on the disk:
 
