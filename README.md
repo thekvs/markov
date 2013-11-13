@@ -19,9 +19,11 @@ There are three components provided:
 1. Utility to generate random texts using compiled model.
 1. Utility to dump compiled model.
 
+If you want to download files from the internet to build a model you need to have installed ```curl``` utility.
+
 #### Examples
 
-Generate Markov chain order 2 using files, stored in the internet and file on the disk:
+Generate Markov chain order 2 using files stored in the internet and file on the disk:
 
 ```
 $ ./mc-build --urls=http://sigterm.ru/WP1.txt,http://sigterm.ru/WP2.txt,http://sigterm.ru/WP3.txt  --files /tmp/AK.txt -d 2 -m /tmp/WPAK.model
