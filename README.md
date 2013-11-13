@@ -1,4 +1,4 @@
-## Simple Markov chain text generator.
+## Simple Nth-order Markov chain text generator.
 
 ### Build
 
