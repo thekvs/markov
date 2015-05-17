@@ -28,8 +28,8 @@ private:
 
     friend class boost::serialization::access;
 
-    typedef boost::bimap<std::string, uint32_t> DataStorage;
-    typedef DataStorage::value_type             DataStorageEntry;
+    using DataStorage = boost::bimap<std::string, uint32_t>;
+    using DataStorageEntry =  DataStorage::value_type;
 
     uint32_t    counter;
     DataStorage data;

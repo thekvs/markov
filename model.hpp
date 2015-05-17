@@ -38,14 +38,14 @@ private:
 
     friend class boost::serialization::access;
 
-    typedef std::map<uint32_t, size_t> Frequencies;
+    using Frequencies = std::map<uint32_t, size_t>;
 
     struct SequenceStat {
         size_t      total_suffixes_count;
         Frequencies frequencies;
     };
 
-    typedef std::map<Sequence, SequenceStat> TextStat;
+    using TextStat = std::map<Sequence, SequenceStat>;
 
     class Transition {
     public:
@@ -67,7 +67,7 @@ private:
         }
     };
 
-    typedef std::map<Sequence, Transition> TransitionTable;
+    using TransitionTable = std::map<Sequence, Transition>;
 
     size_t          dimention;
     TransitionTable transition_table;
